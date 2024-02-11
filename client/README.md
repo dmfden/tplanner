@@ -1,3 +1,3 @@
 # Tplanner
 
-### React 18, Typescript, Tailwind
+### React 18, Redux Toolkit, Typescript, Tailwind
