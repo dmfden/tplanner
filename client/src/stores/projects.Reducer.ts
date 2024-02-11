@@ -1,31 +1,50 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Iproject } from "../@types/Project";
 
-export enum TprojectColors {
-    green = 'green',
-    red = 'red',
-    blue = 'blue'
+export const getProjects = createAsyncThunk("projects/getProjects", async()=> {
+        const response = await fetch("/mocks/data.projects.json");
+        return response.json();
+    });
+
+export interface IApiErrors {
+    isError: boolean,
+    errorMessage: string
 }
 
-export interface Iproject {
-    id: string,
-    name: string,
-    color: TprojectColors,
+export interface IProjectState {
+    projects: Iproject[];
+    errors: IApiErrors;
+    
 }
 
-
-const initialState: Iproject[] = [];
+const initialState: IProjectState = {
+    projects: [],
+    errors: {
+        isError: false,
+        errorMessage: '',
+    }
+}
 
 export const projectSlice = createSlice({
     name: 'projects',
     initialState,
     reducers: {
         addProject: (state, action: PayloadAction<Iproject>)=> {
-            state.push(action.payload);
+            state.projects.push(action.payload);
         },
         removeProject: (state, action: PayloadAction<string>)=> {
-            state.filter(el=>el.id !== action.payload);
+            state.projects.filter(el=>el.id !== action.payload);
         }
-    }
+    },
+    extraReducers: (builder)=> {
+        builder.addCase(getProjects.fulfilled, (state, action)=> {
+            state.projects = [...action.payload];
+        });
+        builder.addCase(getProjects.rejected, (state, action)=>{
+            state.errors.isError = true;
+            action.error.message ? state.errors.errorMessage = action.error.message : '';
+        });
+    },
 });
 
 export const {addProject, removeProject} = projectSlice.actions;
