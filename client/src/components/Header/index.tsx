@@ -5,8 +5,6 @@ import NavMenu from '../NavMenu';
 
 const buttonOpenCloseAnim = 'duration-500 hover:-translate-x-1 hover:-translate-y-1 focus:-translate-x-1 focus:-translate-y-1';
 
-/* TODO add WAI ARIA attributes for DRAWER AND MENU CTAs  */
-
 function Header(): JSX.Element {
 
     const [isOpenPanel, setIsOpenPanel] = useState(false);
@@ -20,11 +18,12 @@ function Header(): JSX.Element {
     }, [])
 
     const drawerPos = isOpenPanel ? "left-0" : "-left-full";
+    const ariaIsOpenMenu = isOpenPanel;
 
     return (
         <header className="py-4 shadow-lg bg-saffron-100">
             <div className="px-4">
-                <button className={`group flex flex-row flex-wrap gap-1 ${buttonOpenCloseAnim}`} onClick={drawerControllCtaHandler}>
+                <button className={`group flex flex-row flex-wrap gap-1 ${buttonOpenCloseAnim}`} onClick={drawerControllCtaHandler} id='menubutton' aria-controls="menu">
                     <div className='flex w-full gap-1'>
                         <Squares2X2Icon className='w-6' />
                         <span>OPEN PANEL</span>
@@ -34,8 +33,8 @@ function Header(): JSX.Element {
                     </div>
                 </button>
             </div>
-            <div className={`absolute top-0 bottom-0 w-3/4 shadow-lg duration-700 px-2 py-4 bg-charcoal-300 ${drawerPos} md:w-2/4 lg:w-1/3 xl:w-[12%]`}>
-                <button className='flex gap-1 ml-auto' onClick={drawerControllCtaHandler}>Close <ArrowLeftCircleIcon className='w-6' /></button>
+            <div className={`absolute top-0 bottom-0 w-3/4 shadow-lg duration-700 px-2 py-4 bg-charcoal-300 ${drawerPos} md:w-2/4 lg:w-1/3 xl:w-[12%]`} id="menu" aria-expanded={ariaIsOpenMenu}>
+                <button className='flex gap-1 ml-auto' onClick={drawerControllCtaHandler}>Close <ArrowLeftCircleIcon className='w-6' id='menubutton_close' aria-controls="menu"/></button>
                 <NavMenu />
             </div>
         </header>
