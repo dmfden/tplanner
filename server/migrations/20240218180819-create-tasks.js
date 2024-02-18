@@ -2,63 +2,58 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('tasks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
-        type: Sequelize.STRING,
-        field: "first_name",
+      projectId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        validate: {
-          notEmpty: true,
+        field: 'project_id', 
+        references: {
+          model: 'projects',
+          key: 'id'
         }
       },
-      lastName: {
-        type: Sequelize.STRING,
-        field: "last_name",
-        allowNull: false,
-        validate: {
-          notEmpty: true
-        }
-      },
-      email: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notEmpty: true
         }
       },
-      password: {
-        type: Sequelize.TEXT,
+      description: {
+        type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notEmpty: true
         }
       },
-      birthday: {
+      deadline: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
         validate: {
           notEmpty: true
         }
+      },
+      isDone: {
+        type: Sequelize.BOOLEAN,
+        field: 'is_done',
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        field: "created_at",
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-        field: "updated_at",
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('tasks');
   }
 };
