@@ -14,7 +14,7 @@ module.exports.createOne = async (req, res, next)=> {
         res.status(201).send({data: createdUser});
         
     } catch (error) {
-        res.status(400).send(error);
+        next(error);
     }
    
 
