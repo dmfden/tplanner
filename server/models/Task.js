@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Task.belongsTo(models.Project, {
-        foreignKey: 'projectId'
+        foreignKey: 'projectId',
+        onDelete: 'CASCADE',
+        onUpdate: "CASCADE"
       });
       // define association here
     }
@@ -44,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Tasks',
+    modelName: 'Task',
     tableName: 'tasks',
     underscored: true
   });

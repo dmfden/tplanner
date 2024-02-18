@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Project.belongsTo(models.User, {
-        foreignKey: 'userId'
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        onUpdate: "CASCADE"
       });
 
       Project.hasMany(models.Task, {

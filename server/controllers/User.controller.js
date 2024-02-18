@@ -1,11 +1,17 @@
-const {User} = require('../models');
+const {User, Project, Task} = require('../models');
 const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.createOne = async (req, res, next)=> {
     try {
         const {body} = req;
         const user = await User.create(body);
-        res.status(201).send({data: user});
+        const createdUser = await User.findOne({
+            where: {
+                id: user.id
+            },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+        })
+        res.status(201).send({data: createdUser});
         
     } catch (error) {
         res.status(400).send(error);
