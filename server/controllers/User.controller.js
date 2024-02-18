@@ -22,7 +22,9 @@ module.exports.createOne = async (req, res, next)=> {
 
 module.exports.getAll = async (req, res, next) => {
     try {
-        const users = await User.findAll();
+        const users = await User.findAll({
+            attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+        });
         res.status(200).send({data: users});
     } catch (error) {
         next(error);
@@ -34,7 +36,7 @@ module.exports.getOne = async (req, res, next) => {
         const {params: {userId}} = req;
         const user = await User.findByPk(userId, {
             attributes: {
-                exclude: ['password']
+                exclude: ['createdAt', 'updatedAt', 'password']
             }
         });
         
