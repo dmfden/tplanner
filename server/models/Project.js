@@ -26,11 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       allowNull: false,
       type: DataTypes.STRING,
-      validate: {
-        notEmpty: true
-      }
     },
     color: {
+      allowNull:true,
+      defaultValue: null,
       type: DataTypes.STRING
     }
   }, {

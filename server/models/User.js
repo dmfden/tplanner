@@ -22,60 +22,24 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       field: "first_name",
-      validate: {
-        notNull: {
-          msg: 'Please enter your First Name'
-        },
-        notEmpty: true,
-      }
     },
     lastName: {
       type: DataTypes.STRING,
       allowNull: false,
       field: "last_name",
-      validate: {
-        notNull: {
-          msg: 'Please enter your Last Name'
-        },
-        notEmpty: true,
-      }
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        notNull: {
-          msg: 'Please enter your Email'
-        },
-        isEmail: true,
-        notEmpty: true,
-      }
     },
     password: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please enter your Password'
-        },
-        notEmpty: true,
-      }
     },
     birthday: {
       type: DataTypes.DATEONLY,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please enter your BirthDay'
-        },
-        isValidDate(value){
-          if(isBefore(new Date(), new Date(value))){
-            throw new Error('Check your BirthDay');
-          }
-        },
-        notEmpty: true,
-      }
     }
   }, {
     sequelize,

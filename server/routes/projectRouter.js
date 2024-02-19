@@ -1,9 +1,10 @@
 const express = require('express');
 const projectRouter = express.Router();
 const projectController = require('../controllers/Project.controller');
+const  {validateProjectsBody} = require('../middlewares');
 
 
-projectRouter.post('/', projectController.createOne); // CREATE PROJECT
+projectRouter.post('/',validateProjectsBody, projectController.createOne); // CREATE PROJECT
 projectRouter.get('/:projectId', projectController.getOne);     // GET PROJECT BY PROJECT ID
 // userRouter.get('/:userId', userController.getOne); // GET USER BY ID
 // userRouter.put('/:userId', userController.updateOne);

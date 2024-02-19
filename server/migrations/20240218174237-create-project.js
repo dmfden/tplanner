@@ -26,6 +26,8 @@ module.exports = {
         }
       },
       color: {
+        allowNull:true,
+        defaultValue: null,
         type: Sequelize.STRING
       },
       createdAt: {

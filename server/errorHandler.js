@@ -1,7 +1,13 @@
+const yup = require('yup');
 const {ValidationError, DatabaseError} = require('sequelize');
 const NotFoundError = require('./errors/NotFoundError');
+const yupValidationsErrors = yup.ValidationError;
 
 module.exports.errorHandler = async (err, req, res, next) => {
+    if(err instanceof yupValidationsErrors){
+        console.log("!!!!!!!!!!!!! YUP ERROR")//
+        return res.status(400).send({errors: {err}})
+    }
 
    if(err instanceof ValidationError) {
          return res.status(400).send({errors: {
@@ -26,5 +32,4 @@ module.exports.errorHandler = async (err, req, res, next) => {
    res.status(500).send(err);
 
 
-} 
-
+}
