@@ -36,3 +36,26 @@ module.exports.getOne = async (req, res, next) => {
         next(error);
     }
 }
+
+
+module.exports.getAllById = async (req, res, next) => {
+    try {
+        const {params: {userId}} = req;
+        const projects = await Project.findAll({
+            where: {
+                userId: Number(userId),
+            },
+            attributes: {
+                exclude: ['createdAt', 'updatedAt']
+            }
+        });
+        
+        if(projects) {
+            res.status(200).send({data: projects}); 
+        }else{
+            throw new NotFoundError('Projects not founded');
+        }
+    } catch(error) {
+        next(error);
+    }
+}
